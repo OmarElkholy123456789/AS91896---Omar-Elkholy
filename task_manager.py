@@ -55,3 +55,41 @@ team_member_dictionary = {
         "Tasks Assigned" : ["T5"]
     }
 }
+
+def menu():
+    """A function which contains the menu for the program. The user can 
+    choose to add a new task, update an exsiting task, search for a team
+    member or task, generate a summary report, or ouput the task collection."""
+    options = {
+        "Add Task" : add_task,
+        #"Update Task" : update_task,
+        #"Search" : search,
+        #"Generate Report" : generate_report
+    }
+
+    menu_choices = []
+
+    for key in options:
+        menu_choices.append(key)
+
+    title = "Task Managment System - Menu"
+    user_choice = easygui.buttonbox("What would you like to do?", title, \
+    choices = menu_choices)
+
+    function = options[user_choice]()
+
+def add_task():
+    
+
+    title = "Task Managment System - Add Task"
+    task_title = easygui.enterbox(f"Please enter the title of the task", title)
+    task_description = easygui.enterbox(f"Please enther the description for \
+    {task_title}", title)
+    task_assignee = easygui.enterbox(f"Please enter the assignee for \
+    {task_title}", title)
+    task_priority = easygui.integerbox(f"Please enter the priority for \
+    {task_title}", title, lowerbound=1, upperbound=3)
+    task_status = easygui.enterbox(f"Please enter the status for \
+    {task_title}", title)
+
+menu()
