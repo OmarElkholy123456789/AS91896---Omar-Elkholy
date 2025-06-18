@@ -64,7 +64,7 @@ def menu():
         "Add Task" : add_task,
         #"Update Task" : update_task,
         #"Search" : search,
-        #"Generate Report" : generate_report
+        #d"Generate Report" : generate_report
     }
 
     menu_choices = []
@@ -87,17 +87,19 @@ def add_task():
 
     title = "Task Managment System - Add Task"
 
-    status_list = []
+    status_list = ["In Progress", "Blocked", "Not Started"]
+
+    assignee_list = ["JSM", "JLO", "BDI", "None"]
 
     task_title = easygui.enterbox(f"Please enter the title of the task", title)
-    task_description = easygui.enterbox(f"Please enther the description for \
-    {task_title}", title)
-    task_assignee = easygui.enterbox(f"Please enter the assignee for \
-    {task_title}", title)
+    task_description = easygui.enterbox(f"Please enter the description for \
+{task_title}", title)
+    task_assignee = easygui.buttonbox(f"Please enter the assignee for \
+{task_title}", title, choices = assignee_list)
     task_priority = easygui.integerbox(f"Please enter the priority for \
-    {task_title} from 1-3", title, lowerbound=1, upperbound=3)
+{task_title} from 1-3", title, lowerbound=1, upperbound=3)
     task_status = easygui.buttonbox(f"Please enter the status for \
-    {task_title}", title, choices = status_list)
+{task_title}", title, choices = status_list)
     
     task_dictionary[task_id] = {
         "Title" : task_title,
@@ -106,5 +108,7 @@ def add_task():
         "Priority" : task_priority,
         "Status" : task_status
     }
+
+    print(task_dictionary)
 
 menu()
