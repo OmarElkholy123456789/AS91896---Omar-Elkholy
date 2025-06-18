@@ -79,17 +79,32 @@ def menu():
     function = options[user_choice]()
 
 def add_task():
+    task_count = 1
+    for key in task_dictionary:
+        task_count += 1
     
+    task_id = (f"T{task_count}")
 
     title = "Task Managment System - Add Task"
+
+    status_list = []
+
     task_title = easygui.enterbox(f"Please enter the title of the task", title)
     task_description = easygui.enterbox(f"Please enther the description for \
     {task_title}", title)
     task_assignee = easygui.enterbox(f"Please enter the assignee for \
     {task_title}", title)
     task_priority = easygui.integerbox(f"Please enter the priority for \
-    {task_title}", title, lowerbound=1, upperbound=3)
-    task_status = easygui.enterbox(f"Please enter the status for \
-    {task_title}", title)
+    {task_title} from 1-3", title, lowerbound=1, upperbound=3)
+    task_status = easygui.buttonbox(f"Please enter the status for \
+    {task_title}", title, choices = status_list)
+    
+    task_dictionary[task_id] = {
+        "Title" : task_title,
+        "Description" : task_description,
+        "Assignee" : task_assignee,
+        "Priority" : task_priority,
+        "Status" : task_status
+    }
 
 menu()
