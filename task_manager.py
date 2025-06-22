@@ -64,7 +64,8 @@ def menu():
         "Add Task" : add_task,
         #"Update Task" : update_task,
         #"Search" : search,
-        #d"Generate Report" : generate_report
+        #"Generate Report" : generate_report,
+        "Output Tasks" : output_tasks
     }
 
     menu_choices = []
@@ -79,6 +80,10 @@ def menu():
     function = options[user_choice]()
 
 def add_task():
+    """This is a function that allows the user to add a task to the task
+    dictionary. It asks the user for the tasks title, description, 
+    assignee, priority, status, and adds an automatic sequential task
+    ID to the task."""
     task_count = 1
     for key in task_dictionary:
         task_count += 1
@@ -109,6 +114,20 @@ def add_task():
         "Status" : task_status
     }
 
-    print(task_dictionary)
+    menu()
+
+def output_tasks():
+    """This is a function which prints all of the tasks in a readable
+    format in an easygui message box."""
+    for task_id, content in task_dictionary.items():
+        msg = f"Title: {content['Title']}\n"
+        msg += f"Description: {content['Description']}\n"
+        msg += f"Assignee: {content['Assignee']}\n"
+        msg += f"Priority: {content['Priority']}\n"
+        msg += f"Status: {content['Status']}\n"
+
+        easygui.msgbox(msg, title = f"Task ID: {task_id}")
+
+    menu()
 
 menu()
