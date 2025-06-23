@@ -59,13 +59,15 @@ team_member_dictionary = {
 def menu():
     """A function which contains the menu for the program. The user can 
     choose to add a new task, update an exsiting task, search for a team
-    member or task, generate a summary report, or ouput the task collection."""
+    member or task, generate a summary report, or ouput the task 
+    collection."""
     options = {
         "Add Task" : add_task,
-        #"Update Task" : update_task,
+        "Update Task" : update_task,
         #"Search" : search,
         #"Generate Report" : generate_report,
-        "Output Tasks" : output_tasks
+        "Output Tasks" : output_tasks,
+        "Quit" : quit
     }
 
     menu_choices = []
@@ -113,6 +115,7 @@ def add_task():
         "Priority" : task_priority,
         "Status" : task_status
     }
+    
 
     menu()
 
@@ -129,5 +132,26 @@ def output_tasks():
         easygui.msgbox(msg, title = f"Task ID: {task_id}")
 
     menu()
+
+def update_task():
+    """This function will allow the user to update a task. They will
+    be able to update the tasks status, assign a team member to a task,
+    and when a tasks status is complete, it should automatically be
+    removed from the team members task list."""
+    task_titles = []
+
+    for task_id, titles in task_dictionary.items():
+        task_titles.append(titles["Title"])
+
+    msg = "What task would you like to update a detail of?"
+    title = "Update Task"
+
+    task_choice = easygui.buttonbox(msg, title, task_titles)
+
+    task
+
+def quit():
+    """This function will allow the user to quit the program."""
+    quit
 
 menu()
