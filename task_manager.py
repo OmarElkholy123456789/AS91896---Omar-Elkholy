@@ -115,8 +115,9 @@ def add_task():
         "Priority" : task_priority,
         "Status" : task_status
     }
-    
 
+    team_member_dictionary[task_assignee]["Tasks Assigned"].append(task_id)
+    
     menu()
 
 def output_tasks():
@@ -148,7 +149,22 @@ def update_task():
 
     task_choice = easygui.buttonbox(msg, title, task_titles)
 
-    task
+    task_info = []
+
+    for task_information in task_dictionary[task_choice]:
+        task_info.append(task_information)
+
+    msg = f"What detail of {task_choice} would you like to edit?"
+    title = "Edit Choice"
+
+    edit_choice = easygui.buttonbox(msg, title, task_info)
+
+    msg = f"Enter the new {edit_choice} for {task_choice}"
+    title = "Edit Choice"
+
+    task_dictionary[task_choice][edit_choice] = easygui.enterbox(msg, title)
+
+    menu()
 
 def quit():
     """This function will allow the user to quit the program."""
