@@ -139,13 +139,6 @@ def update_task():
     be able to update the tasks status, assign a team member to a task,
     and when a tasks status is complete, it should automatically be
     removed from the team members task list."""
-    task_ids = []
-
-    task_count = 0
-    for key in task_dictionary:
-        task_count += 1
-        task_id = (f"T{task_count}")
-        task_ids.append(task_id)
 
     task_titles = []
 
@@ -157,19 +150,23 @@ def update_task():
 
     task_choice = easygui.buttonbox(msg, title, task_titles)
 
-    task_verify = 0
+    task_id_num = 1
 
     check = True
 
     while check == True:
         for i in task_titles:
-            task_verify = i
-        if task_verify == task_choice
-        
+            if i != task_choice:
+                task_id_num = task_id_num + 1               
+            else:
+                check = False
+                break
+
+    task_id = f"T{task_id_num}"
 
     task_info = []
 
-    for task_information in task_dictionary[task_choice]:
+    for task_information in task_dictionary[task_id]:
         task_info.append(task_information)
 
     msg = f"What detail of {task_choice} would you like to edit?"
@@ -180,7 +177,9 @@ def update_task():
     msg = f"Enter the new {edit_choice} for {task_choice}"
     title = "Edit Choice"
 
-    task_dictionary[task_choice][edit_choice] = easygui.enterbox(msg, title)
+    task_dictionary[task_id][edit_choice] = easygui.enterbox(msg, title)
+
+    
 
     menu()
 
