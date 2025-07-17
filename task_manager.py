@@ -150,11 +150,15 @@ a detail of?", "Update Task", task_titles)
 
     task_id_num = 1
 
-    for i in task_titles:
-        if i != task_choice:
-            task_id_num += 1               
-        else:
-            pass
+    check = True
+
+    while check == True:
+        for i in task_titles:
+            if i != task_choice:
+                task_id_num += 1               
+            else:
+                check = False
+                break
 
     task_id = f"T{task_id_num}"
 
@@ -171,23 +175,23 @@ would you like to edit?", "Edit Choice", task_info)
     status_list = ["Completed", "In Progress", "Blocked", "Not Started"]
 
     if edit_choice == "Assignee":
-        easygui.buttonbox(f"Please select the new assignee for \
-{task_choice}", "Update Assignee", choices = assignee_list)
+        task_dictionary[task_id][edit_choice] = easygui.buttonbox(f"Please \
+select the new assignee for {task_choice}", "Update Assignee", \
+choices = assignee_list)
     elif edit_choice == "Priority":
-        easygui.integerbox(f"Please enter the updated priority for \
-{task_choice}", title = "Update Priority",lowerbound = 1, upperbound = 3)
+        task_dictionary[task_id][edit_choice] = easygui.integerbox(f"Please \
+enter the updated priority for {task_choice}", title = "Update Priority", \
+lowerbound = 1, upperbound = 3)
     elif edit_choice == "Status":
-        easygui.buttonbox(f"Please select the updated status for \
-{task_choice}", title = "Update Status", choices = status_list)
+        task_dictionary[task_id][edit_choice] = easygui.buttonbox(f"Please \
+select the updated status for {task_choice}", title = "Update Status", \
+choices = status_list)
     elif edit_choice == "Title":
-        easygui.enterbox(f"Please enter the new title for \
-{task_choice}", title = "Update Title")
+        task_dictionary[task_id][edit_choice] = easygui.enterbox(f"Please \
+enter the new title for {task_choice}", title = "Update Title")
     else:
-        easygui.enterbox(f"Please enter the new description for \
-{task_choice}", title = "Update Description")
-
-    task_dictionary[task_id][edit_choice] = easygui.enterbox(f"Enter \
-the new {edit_choice} for {task_choice}", "Edit Choice")
+        task_dictionary[task_id][edit_choice] = easygui.enterbox(f"Please \
+enter the new description for {task_choice}", title = "Update Description")
 
     menu()
 
