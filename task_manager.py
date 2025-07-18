@@ -180,7 +180,7 @@ select the new assignee for {task_choice}", "Update Assignee", \
 choices = assignee_list)
     elif edit_choice == "Priority":
         task_dictionary[task_id][edit_choice] = easygui.integerbox(f"Please \
-enter the updated priority for {task_choice}", title = "Update Priority", \
+enter the updated priority for {task_choice} from 1 - 3", title = "Update Priority", \
 lowerbound = 1, upperbound = 3)
     elif edit_choice == "Status":
         task_dictionary[task_id][edit_choice] = easygui.buttonbox(f"Please \
@@ -192,6 +192,11 @@ enter the new title for {task_choice}", title = "Update Title")
     else:
         task_dictionary[task_id][edit_choice] = easygui.enterbox(f"Please \
 enter the new description for {task_choice}", title = "Update Description")
+
+    if task_dictionary[task_id][edit_choice] == "Completed":
+        task_assignee = task_dictionary[task_id]["Assignee"]
+        task_dictionary[task_id]["Assignee"] = "None"
+        team_member_dictionary[task_assignee]["Tasks Assigned"].pop(task_id)
 
     menu()
 
