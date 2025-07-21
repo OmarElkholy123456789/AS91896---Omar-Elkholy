@@ -64,7 +64,7 @@ def menu():
     options = {
         "Add Task" : add_task,
         "Update Task" : update_task,
-        #"Search" : search_tasks,
+        "Search" : search,
         #"Generate Report" : generate_report,
         "Output Tasks" : output_tasks,
         "Quit" : quit
@@ -148,6 +148,9 @@ def update_task():
     task_choice = easygui.buttonbox("What task would you like to update \
 a detail of?", "Update Task", task_titles)
 
+    title_to_task_id(task_titles, task_choice)
+
+    """
     task_id_num = 1
 
     check = True
@@ -161,6 +164,8 @@ a detail of?", "Update Task", task_titles)
                 break
 
     task_id = f"T{task_id_num}"
+
+    """
 
     task_info = []
 
@@ -204,6 +209,54 @@ enter the new description for {task_choice}", title = "Update Description")
         team_member_dictionary[task_assignee]["Tasks Assigned"].remove(task_id)
 
     menu()
+
+def search():
+    task_titles = []
+
+    members = []
+
+    for task_id, titles in task_dictionary.items():
+        task_titles.append(titles["Title"])
+
+    for team_member in team_member_dictionary:
+        members.append(team_member)
+
+    memb_or_task = easygui.buttonbox("Would you like to search by a team \
+member or a task title?", choices = ["Team Member", "Task Title"], \
+title = "Search")
+
+    if memb_or_task == "Task Title":
+        chosen_task = easygui.buttonbox("What task you like to search for?", \
+        choices = task_titles, title = "Search for task")
+
+        check = True
+
+        while check == True:
+            for i in task_titles:
+                if i != chosen_task:
+                    task_id_num += 1               
+                else:
+                    check = False
+                    break
+
+    task_id = f"T{task_id_num}"
+        
+
+def title_to_task_id(task_titles, task_choice):
+
+    task_id_num = 1
+
+    check = True
+
+    while check == True:
+        for i in task_titles:
+            if i != task_choice:
+                task_id_num += 1               
+            else:
+                check = False
+                break
+
+    task_id = f"T{task_id_num}"
 
 def quit():
     """This function will allow the user to quit the program."""
