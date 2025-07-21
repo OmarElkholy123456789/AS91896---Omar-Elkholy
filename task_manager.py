@@ -64,7 +64,7 @@ def menu():
     options = {
         "Add Task" : add_task,
         "Update Task" : update_task,
-        #"Search" : search,
+        #"Search" : search_tasks,
         #"Generate Report" : generate_report,
         "Output Tasks" : output_tasks,
         "Quit" : quit
@@ -175,13 +175,18 @@ would you like to edit?", "Edit Choice", task_info)
     status_list = ["Completed", "In Progress", "Blocked", "Not Started"]
 
     if edit_choice == "Assignee":
+        old_assignee = task_dictionary[task_id]["Assignee"]
         task_dictionary[task_id][edit_choice] = easygui.buttonbox(f"Please \
 select the new assignee for {task_choice}", "Update Assignee", \
 choices = assignee_list)
+        team_member_dictionary[old_assignee]["Tasks Assigned"].remove(task_id)
+        team_member_dictionary[task_dictionary[task_id][edit_choice]]\
+        ["Tasks Assigned"].append(task_id)
+        print(team_member_dictionary)
     elif edit_choice == "Priority":
         task_dictionary[task_id][edit_choice] = easygui.integerbox(f"Please \
-enter the updated priority for {task_choice} from 1 - 3", title = "Update Priority", \
-lowerbound = 1, upperbound = 3)
+enter the updated priority for {task_choice} from 1 - 3", title = \
+"Update Priority", lowerbound = 1, upperbound = 3)
     elif edit_choice == "Status":
         task_dictionary[task_id][edit_choice] = easygui.buttonbox(f"Please \
 select the updated status for {task_choice}", title = "Update Status", \
@@ -196,7 +201,7 @@ enter the new description for {task_choice}", title = "Update Description")
     if task_dictionary[task_id][edit_choice] == "Completed":
         task_assignee = task_dictionary[task_id]["Assignee"]
         task_dictionary[task_id]["Assignee"] = "None"
-        team_member_dictionary[task_assignee]["Tasks Assigned"].pop(task_id)
+        team_member_dictionary[task_assignee]["Tasks Assigned"].remove(task_id)
 
     menu()
 
