@@ -56,6 +56,24 @@ team_member_dictionary = {
     }
 }
 
+def title_to_task_id(task_titles, chosen_task):
+
+    task_id_num = 1
+
+    check = True
+
+    while check == True:
+        for i in task_titles:
+            if i != chosen_task:
+                task_id_num += 1               
+            else:
+                check = False
+                break
+
+    task_id = f"T{task_id_num}"
+
+    return task_id
+
 def menu():
     """A function which contains the menu for the program. The user can 
     choose to add a new task, update an exsiting task, search for a team
@@ -148,24 +166,7 @@ def update_task():
     task_choice = easygui.buttonbox("What task would you like to update \
 a detail of?", "Update Task", task_titles)
 
-    title_to_task_id(task_titles, task_choice)
-
-    """
-    task_id_num = 1
-
-    check = True
-
-    while check == True:
-        for i in task_titles:
-            if i != task_choice:
-                task_id_num += 1               
-            else:
-                check = False
-                break
-
-    task_id = f"T{task_id_num}"
-
-    """
+    task_id = title_to_task_id(task_titles, task_choice)
 
     task_info = []
 
@@ -229,34 +230,34 @@ title = "Search")
         chosen_task = easygui.buttonbox("What task you like to search for?", \
         choices = task_titles, title = "Search for task")
 
-        check = True
+        task_id = title_to_task_id(task_titles, chosen_task)
+        print(task_id)
 
-        while check == True:
-            for i in task_titles:
-                if i != chosen_task:
-                    task_id_num += 1               
-                else:
-                    check = False
-                    break
+        for key, content in task_dictionary.items():
+            if task_id == key:
+                msg = f"Title: {content['Title']}\n"
+                msg += f"Description: {content['Description']}\n"
+                msg += f"Assignee: {content['Assignee']}\n"
+                msg += f"Priority: {content['Priority']}\n"
+                msg += f"Status: {content['Status']}\n"
 
-    task_id = f"T{task_id_num}"
-        
+        easygui.msgbox(msg, title = f"Task ID: {task_id}")
 
-def title_to_task_id(task_titles, task_choice):
-
-    task_id_num = 1
+        """    task_id_num = 1
 
     check = True
 
     while check == True:
         for i in task_titles:
-            if i != task_choice:
+            if i != chosen_task:
                 task_id_num += 1               
             else:
                 check = False
                 break
 
     task_id = f"T{task_id_num}"
+
+    return task_id"""
 
 def quit():
     """This function will allow the user to quit the program."""
