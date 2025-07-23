@@ -82,7 +82,7 @@ def menu():
     options = {
         "Add Task" : add_task,
         "Update Task" : update_task,
-        "Search" : search,
+        "Search" : search_menu,
         #"Generate Report" : generate_report,
         "Output Tasks" : output_tasks,
         "Quit" : quit
@@ -211,7 +211,10 @@ enter the new description for {task_choice}", title = "Update Description")
 
     menu()
 
-def search():
+def search_menu():
+    """This is the menu for the search function, where the user is able
+    to decide if they would like to search for a task or a team
+    team member."""
     task_titles = []
 
     members = []
@@ -227,40 +230,60 @@ member or a task title?", choices = ["Team Member", "Task Title"], \
 title = "Search")
 
     if memb_or_task == "Task Title":
-        chosen_task = easygui.buttonbox("What task you like to search for?", \
-        choices = task_titles, title = "Search for task")
+        search_task(task_titles)
+    else:
+        search_member()
+        
 
-        task_id = title_to_task_id(task_titles, chosen_task)
-        print(task_id)
+def search_task(task_titles):
+    """This function allows the user to search for a task by
+    choosing the title of the task they want to search for, then
+    they should see an easygui message box with all of the tasks
+    information."""
+    chosen_task = easygui.buttonbox("What task would you like to search for?", \
+    choices = task_titles, title = "Search for task")
 
-        for key, content in task_dictionary.items():
-            if task_id == key:
-                msg = f"Title: {content['Title']}\n"
-                msg += f"Description: {content['Description']}\n"
-                msg += f"Assignee: {content['Assignee']}\n"
-                msg += f"Priority: {content['Priority']}\n"
-                msg += f"Status: {content['Status']}\n"
+    task_id = title_to_task_id(task_titles, chosen_task)
+    print(task_id)
 
-        easygui.msgbox(msg, title = f"Task ID: {task_id}")
+    for key, content in task_dictionary.items():
+        if task_id == key:
+            msg = f"Title: {content['Title']}\n"
+            msg += f"Description: {content['Description']}\n"
+            msg += f"Assignee: {content['Assignee']}\n"
+            msg += f"Priority: {content['Priority']}\n"
+            msg += f"Status: {content['Status']}\n"
 
-        """    task_id_num = 1
+    easygui.msgbox(msg, title = f"Task ID: {task_id}")
 
-    check = True
+def search_member():
+    """This function allows the user to search for a team member by
+    choosing the name of the team member they want to search for, then
+    they should see an easygui message box with all of the team members
+    details."""
+    chosen_member = easygui.buttonbox("Which team member would you \
+like to search for?",choices = ["John Smith", "Jane Love", "Bob Dillon"], \
+title = "Search for Team Member")
+    for assignee_code, content in team_member_dictionary.items():
+        if content["Name"] == chosen_member:
+            msg = f"Member ID: {assignee_code}\n"
+            msg += f"Name: {content['Name']}\n"
+            msg += f"Email: {content['Email']}\n"
+            msg += f"Tasks Assigned: {content['Tasks Assigned']}\n"
 
-    while check == True:
-        for i in task_titles:
-            if i != chosen_task:
-                task_id_num += 1               
-            else:
-                check = False
-                break
+    easygui.msgbox(msg, title = chosen_member)
 
-    task_id = f"T{task_id_num}"
+def generate_report():
+    tasks_completed = 0
+    tasks_in_progress = 0
+    task_blocked = 0
+    tasks_not_started = 0
 
-    return task_id"""
+    
 
 def quit():
     """This function will allow the user to quit the program."""
+    easygui.msgbox("Goodbye!", title = "Quit")
     quit
 
 menu()
